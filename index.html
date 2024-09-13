@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horror Movie Quiz</title>
+    <style>
+        body {
+            background-color: #FFDE59; /* Yellow */
+            color: black;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .title {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .subtitle {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase; /* Capitalize text */
+            margin-bottom: 20px;
+        }
+        #questionBox {
+            width: 70%;
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid black;
+            border-radius: 15px;
+            background-color: #5CE1E6; /* Light blue */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            overflow: auto;
+            margin-bottom: 20px; /* Space for button */
+        }
+        #questionButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        #question {
+            font-size: 20px;
+            line-height: 1.5;
+            text-align: center;
+            border-radius: 15px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="title">QUIZHEADS</div>
+    <div class="subtitle">Horror Movies</div>
+    <div id="questionBox">
+        <div id="question">Press the button to get a question!</div>
+    </div>
+    <button id="questionButton">Press for Questions</button>
+
+    <script>
+        const questions = [
+            { q: "What movie is often considered the first true slasher film?", a: "Psycho" },
+            { q: "In which horror film do the characters say 'The power of Christ compels you'?", a: "The Exorcist" },
+            { q: "What is the name of the haunted hotel in 'The Shining'?", a: "The Overlook Hotel" },
+            { q: "Which horror film features a doll named Annabelle?", a: "The Conjuring" },
+            { q: "What is the name of the ghost in 'The Ring'?", a: "Samara" },
+            { q: "Who directed the movie 'Get Out'?", a: "Jordan Peele" },
+            { q: "Which movie is known for the line 'Here's Johnny!'?", a: "The Shining" },
+            { q: "In 'A Nightmare on Elm Street,' what is the name of the killer?", a: "Freddy Krueger" },
+            { q: "What type of monster is the antagonist in 'Jaws'?", a: "Shark" },
+            { q: "Which film features a group of friends being terrorized in a cabin in the woods?", a: "Evil Dead" },
+            { q: "What is the name of the ghost in 'Poltergeist'?", a: "The Poltergeist" },
+            { q: "In 'Halloween,' what is the name of the masked killer?", a: "Michael Myers" },
+            { q: "Which movie involves a killer known as Ghostface?", a: "Scream" },
+            { q: "In 'The Exorcism of Emily Rose,' what is Emily Rose's real name?", a: "Anneliese Michel" },
+            { q: "What horror film series involves a game of 'Saw'?", a: "Saw" },
+            { q: "What is the name of the cabin in 'Cabin in the Woods'?", a: "The Cabin" },
+            { q: "Who stars as the lead in 'The Silence of the Lambs'?", a: "Jodie Foster" },
+            { q: "In 'The Babadook,' what is the name of the book?", a: "Mister Babadook" },
+            { q: "Which horror movie features a group of friends trapped in a remote village?", a: "The Wicker Man" },
+            { q: "In 'Paranormal Activity,' what is the main supernatural entity?", a: "Demon" },
+            { q: "What is the title of the sequel to 'The Exorcist'?", a: "Exorcist II: The Heretic" },
+            { q: "Who directed the 1973 film 'The Exorcist'?", a: "William Friedkin" },
+            { q: "In 'It,' what is the shape-shifting clown's name?", a: "Pennywise" },
+            { q: "What is the name of the doll in 'Child's Play'?", a: "Chucky" },
+            { q: "What horror film is set in a maze of mirrors?", a: "Mirrors" },
+            { q: "In 'The Texas Chain Saw Massacre,' what is the name of the antagonist family?", a: "The Hewitt Family" },
+            { q: "Which film is about a haunted house on the hill?", a: "The Haunting" },
+            { q: "In 'The Others,' what is the main twist revealed at the end?", a: "The family are ghosts" },
+            { q: "What is the name of the scientist who creates a monster from body parts?", a: "Victor Frankenstein" },
+            { q: "In 'The Grudge,' who is the vengeful spirit?", a: "Kayako" },
+            { q: "Which film follows a family terrorized by creatures that come out at night?", a: "A Quiet Place" },
+            { q: "In 'Bird Box,' what causes people to commit suicide?", a: "Seeing a mysterious entity" },
+            { q: "What movie features a doll named Annabelle?", a: "Annabelle" },
+            { q: "What is the name of the ship in 'Event Horizon'?", a: "Event Horizon" },
+            { q: "In 'The Descent,' what do the characters discover in the cave?", a: "Cave-dwelling creatures" },
+            { q: "Which horror film is based on the book by Stephen King about a haunted car?", a: "Christine" },
+            { q: "In 'Rosemary's Baby,' what is the name of the baby?", a: "Adrian" },
+            { q: "What film involves a killer known as Jigsaw?", a: "Saw" },
+            { q: "In 'The Conjuring,' who are the real-life paranormal investigators featured?", a: "Ed and Lorraine Warren" },
+            { q: "Which horror film features a cursed videotape?", a: "The Ring" },
+            { q: "In 'Hellraiser,' what is the name of the lead demon?", a: "Pinhead" },
+            { q: "What is the primary setting in 'The Witch'?", a: "A New England farm" },
+            { q: "In 'Us,' what do the doppelgängers refer to themselves as?", a: "The Tethered" },
+            { q: "What movie involves a group of people dealing with a cursed videotape?", a: "The Ring" },
+            { q: "In 'Creepshow,' what is the name of the horror anthology?", a: "Creepshow" },
+            { q: "In 'House on Haunted Hill,' what is the main plot?", a: "Guests in a haunted house" },
+            { q: "Which film involves a haunted mirror?", a: "Oculus" },
+            { q: "What is the name of the curse in 'The Grudge'?", a: "The Grudge" },
+            { q: "Which film features a haunted house known as Hill House?", a: "The Haunting of Hill House" },
+            { q: "In 'The Ring,' what happens when you watch the cursed videotape?", a: "You receive a phone call and then die in seven days" },
+            { q: "What film is known for its use of found footage to tell the story?", a: "Paranormal Activity" },
+            { q: "In 'The Conjuring 2,' which entity is being investigated?", a: "The Enfield Poltergeist" },
+            { q: "Which film involves a family that must stay silent to avoid being killed by monsters?", a: "A Quiet Place" },
+            { q: "In 'Hereditary,' what does the family discover about their ancestry?", a: "A history of occult practices" },
+            { q: "What is the name of the cursed house in 'The Haunting of Hill House'?", a: "Hill House" },
+            { q: "In 'The Exorcist,' what is the name of the girl being possessed?", a: "Regan MacNeil" },
+            { q: "Which film features a killer who uses a phone to terrorize his victims?", a: "Scream" },
+            { q: "What is the name of the film where a group of people are terrorized by a creature in the dark?", a: "Lights Out" },
+            { q: "In 'The Ring,' what does the cursed videotape show?", a: "Disturbing and supernatural images" },
+            { q: "What is the primary antagonist in 'The Strangers'?", a: "A group of masked strangers" },
+            { q: "In 'The Cabin in the Woods,' what is the twist about the cabin?", a: "It's a controlled environment for experiments" },
+            { q: "What horror film involves a scientist creating a creature from body parts?", a: "Frankenstein" },
+            { q: "In 'The Witch,' what is the nature of the evil entity?", a: "A witch" },
+            { q: "Which film involves a cursed videotape and a vengeful spirit?", a: "The Ring" },
+            { q: "In 'The Babadook,' what is the significance of the Babadook book?", a: "It represents grief and trauma" },
+            { q: "What is the antagonist in 'The Texas Chain Saw Massacre'?", a: "Leatherface" },
+            { q: "In 'The Others,' what is the twist about the ghosts?", a: "The family is actually dead" },
+            { q: "Which film features a haunted house and a group of paranormal investigators?", a: "The Haunting" },
+            { q: "In 'The Exorcism of Emily Rose,' what is the nature of the possession?", a: "Supernatural" },
+            { q: "What movie features a haunted mirror and supernatural events?", a: "Oculus" },
+            { q: "In 'The Grudge,' what is the source of the haunting?", a: "A curse" },
+            { q: "Which film is about a family that experiences supernatural occurrences after moving into a new home?", a: "The Conjuring" },
+            { q: "In 'The Descent,' what do the characters discover in the cave?", a: "Creepy, cave-dwelling creatures" },
+            { q: "What is the antagonist in 'The Orphan'?", a: "A woman pretending to be a child" },
+            { q: "Which film features a haunted house with a history of violence?", a: "The Amityville Horror" },
+            { q: "In 'Paranormal Activity,' what causes the disturbances in the house?", a: "A demonic presence" },
+            { q: "What is the name of the creature in 'A Quiet Place'?", a: "Blind monsters" },
+            { q: "In 'The Witch,' what is the primary antagonist?", a: "A witch" },
+            { q: "What film involves a family struggling to survive after a supernatural outbreak?", a: "The Witch" },
+            { q: "In 'The Grudge,' who is the primary antagonist?", a: "Kayako Saeki" },
+            { q: "Which film involves a haunted doll causing terror?", a: "Annabelle" },
+            { q: "What is the name of the haunted house in 'The Haunting of Hill House'?", a: "Hill House" },
+            { q: "In 'The Ring,' what is the consequence of watching the cursed tape?", a: "You die in seven days" },
+            { q: "Which horror movie features a group of people dealing with a cursed videotape?", a: "The Ring" },
+            { q: "In 'Hereditary,' what is revealed about the family?", a: "They have a dark history with occult practices" },
+            { q: "What is the name of the killer in 'The Silence of the Lambs'?", a: "Hannibal Lecter" },
+            { q: "Which film features a haunted house and a curse related to a videotape?", a: "The Ring" },
+            { q: "In 'The Others,' what is the main supernatural element?", a: "Ghosts" },
+            { q: "What is the primary antagonist in 'The Exorcism of Emily Rose'?", a: "A demon" },
+            { q: "Which movie involves a family being haunted by a supernatural presence in their new house?", a: "The Conjuring" },
+            { q: "In 'The Descent,' what do the characters find in the cave?", a: "Predatory creatures" },
+            { q: "What is the main setting in 'The Witch'?", a: "A remote farm" },
+            { q: "In 'The Grudge,' what causes the haunting?", a: "A curse" },
+            { q: "Which film involves a haunted house with a dark history?", a: "The Amityville Horror" },
+            { q: "What is the name of the creature in 'The Bye Bye Man'?", a: "The Bye Bye Man" },
+            { q: "In 'The Autopsy of Jane Doe,' what do they discover during the autopsy?", a: "Supernatural elements" },
+            { q: "Which film features a haunted house and a history of violence?", a: "The Haunting" },
+            { q: "In 'The Orphan,' what is the twist about Esther?", a: "She is an adult woman pretending to be a child" },
+            { q: "What is the setting of 'The Exorcism of Emily Rose'?", a: "A courtroom" },
+            { q: "Which film features a doll causing terror and is part of 'The Conjuring' universe?", a: "Annabelle" },
+            { q: "What is the name of the cursed house in 'The Haunting of Hill House'?", a: "Hill House" },
+            { q: "In 'The Witch,' what is the nature of the evil force?", a: "A witch" },
+            { q: "Which film involves a supernatural presence in a new home?", a: "The Conjuring" }
+        ];
+
+        let usedQuestions = [];
+
+        function getRandomQuestion() {
+            if (usedQuestions.length === questions.length) {
+                usedQuestions = [];
+            }
+
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * questions.length);
+            } while (usedQuestions.includes(randomIndex));
+
+            usedQuestions.push(randomIndex);
+            return questions[randomIndex];
+        }
+
+        document.getElementById('questionButton').addEventListener('click', function() {
+            const questionObj = getRandomQuestion();
+            document.getElementById('question').innerText = `${questionObj.q}\n\nAnswer: ${questionObj.a}`;
+        });
+    </script>
+</body>
+</html>
